@@ -1,0 +1,30 @@
+{
+  "name": "note-taking",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "App_Start": "nodemon server.js",
+    "Start_App": "nodemon server.js",
+    "Dev_Start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arthem1z/note-taking.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arthem1z/note-taking/issues"
+  },
+  "homepage": "https://github.com/arthem1z/note-taking#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.9.3"
+  }
+}
