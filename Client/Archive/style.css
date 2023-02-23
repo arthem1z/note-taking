@@ -16,15 +16,18 @@
     justify-content: right;
 }
 #delete-archive-btn{
-    background-color: red;
     width: max-content;
-    color: white;
+    color: red;
     font-size: 2rem;
     padding: 15px;
     border-radius: 5px;
     border: red solid 2px;
     margin: 20px 40px;
     cursor: pointer;
+}
+#delete-archive-btn:hover{
+    background-color: red;
+    color: white;
 }
 h1{
     text-align: center;
@@ -79,6 +82,7 @@ h1{
 #notes-container{
     width: 800px;
     margin: 5vh auto;
+    margin-bottom: 35vh;
 }
 #new-note-btn{
     background-color: blue;

@@ -43,7 +43,7 @@ async function GetArchive(){
             }
         });        
         document.getElementById("title").innerHTML += `<u>${responseData.Name}</u>`;
-        document.title = 'Archive |' + responseData.Name;
+        document.title = 'Archive | ' + responseData.Name;
         for(var i=responseData.ChildArchives.length-1; i>=0; i--){
             document.getElementById("children-archives").innerHTML += `<div class="archive" uuid="${responseData.ChildArchives[i].UUID}">${responseData.ChildArchives[i].Name}</div>`;
             var ChildArchiveUUID = responseData.ChildArchives[i].UUID;
