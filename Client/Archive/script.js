@@ -27,6 +27,21 @@ async function GetArchive(){
                 window.location.href = '/';
             }
         });
+        document.getElementById("delete-archive-btn").addEventListener('click', async function(e){
+            e.stopImmediatePropagation();
+            var deleteResponse = await fetch('/deleteArchive', {
+                method: "DELETE",
+                headers: {'Content-type': 'application/json'},
+                body: JSON.stringify({UUID: GetArchiveUUID()})
+            });
+            if(deleteResponse.status == 200){
+                if(responseData.ParentArchive){
+                    window.location.href = `/archive/${responseData.ParentArchive}`;
+                }else{
+                    window.location.href = '/';
+                }    
+            }
+        });        
         document.getElementById("title").innerHTML += `<u>${responseData.Name}</u>`;
         document.title = 'Archive |' + responseData.Name;
         for(var i=responseData.ChildArchives.length-1; i>=0; i--){
@@ -67,7 +82,6 @@ function LinkArchives(){
         });
     }
 }
-//Fetch notes
 async function GetNotes(){
     var response = await fetch('/getNotes', {
         method: "POST",
@@ -79,14 +93,19 @@ async function GetNotes(){
         for(var i=0; i<responseData.length; i++){
             DisplayNote(responseData[i].id, responseData[i].DateCreated, responseData[i].Text)
         }
+        var deleteNoteBtn = document.getElementsByClassName('delete-note-btn');
+        for(var i=0; i<deleteNoteBtn.length; i++){
+            deleteNoteBtn[i].addEventListener('click', function(e){
+                e.stopImmediatePropagation();
+                DeleteNote(this.parentElement.parentElement.getAttribute('note-id'));
+            });
+        }
     }
 }
-//Display notes
 function DisplayNote(id, date, text){
     var noteDate = new Date(date);
-    document.getElementById("notes-container").innerHTML = `<div class="note" note-id="${id}"><div class="note-header"><p class="note-id">${id}</p><p class="note-date">${noteDate.toUTCString()}</p></div><div class="textarea" contenteditable="true">${text}</div></div>` + document.getElementById("notes-container").innerHTML;
+    document.getElementById("notes-container").innerHTML = `<div class="note" note-id="${id}"><div class="note-header"><p class="delete-note-btn">&#10006</p><p class="note-id">${id}</p><p class="note-date">${noteDate.toUTCString()}</p></div><div class="textarea" contenteditable="true">${text}</div></div>` + document.getElementById("notes-container").innerHTML;
 }
-//Create notes
 async function NewNote(){
     var response  = await fetch('/newNote', {
         method: "PUT",
@@ -96,9 +115,15 @@ async function NewNote(){
     if(response.status == 200){
         var responseData = await response.json();
         DisplayNote(responseData.id, responseData.DateCreated, "");
+        var deleteNoteBtn = document.getElementsByClassName('delete-note-btn');
+        for(var i=0; i<deleteNoteBtn.length; i++){
+            deleteNoteBtn[i].addEventListener('click', function(e){
+                e.stopImmediatePropagation();
+                DeleteNote(this.parentElement.parentElement.getAttribute('note-id'));
+            });
+        }
     }
 }
-//Update notes
 async function UpdateNotes(){
     //Get all the data and store it in JSON
     var notes = document.getElementsByClassName("note");
@@ -114,5 +139,15 @@ async function UpdateNotes(){
     });
     if(response.status == 200){
         setTimeout(UpdateNotes, 2000);
+    }
+}
+async function DeleteNote(id){
+    var response = await fetch('/deleteNote', {
+        method: "DELETE",
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({NoteID: id})
+    });
+    if(response.status == 200){
+        document.querySelector(`div[note-id="${id}"]`).remove();
     }
 }

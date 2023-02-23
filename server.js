@@ -136,6 +136,50 @@ app.put('/updateNotes', async function(req, res){
         res.sendStatus(500);
     }
 });
+app.delete('/deleteNote', async function(req, res){
+    try{
+        NoteModel.findByIdAndRemove(req.body.NoteID, function(err, note){
+            if(err){
+                console.log(err);
+                res.sendStatus(500);
+            }else{
+                res.sendStatus(200);
+            }
+        });
+    }catch(e){
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+app.delete('/deleteArchive', async function(req, res){
+    try{
+        DeleteArchive(req.body.UUID);
+        res.sendStatus(200);
+    }catch(e){
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+function DeleteArchive(UUID){
+    ArchiveModel.findOneAndRemove({UUID: UUID}, function(err, archive){
+        if(err){
+            console.log(err);
+        }else{
+            //Delete the notes
+            ArchiveModel.deleteMany({ParentArchiveUUID: archive.UUID});
+            //Delete the child archives
+            ArchiveModel.find({ParentArchive: archive._id}, function(err, archives){
+                if(err){
+                    console.log(err);
+                }else{
+                    for(var i=0; i<archives.length; i++){
+                        DeleteArchive(archives[i].UUID);
+                    }
+                }
+            });
+        }
+    });
+}
 
 //Start the server
 app.listen(process.env.PORT);

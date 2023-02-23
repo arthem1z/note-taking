@@ -1,9 +1,28 @@
+#header{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
 #back-btn{
     width: max-content;
     font-size: 2rem;
     padding: 15px;
     border-radius: 5px;
     border: black solid 2px;
+    margin: 20px 40px;
+    cursor: pointer;
+}
+#delete-archive-container{
+    display: flex;
+    justify-content: right;
+}
+#delete-archive-btn{
+    background-color: red;
+    width: max-content;
+    color: white;
+    font-size: 2rem;
+    padding: 15px;
+    border-radius: 5px;
+    border: red solid 2px;
     margin: 20px 40px;
     cursor: pointer;
 }
@@ -79,11 +98,16 @@ h1{
 .note-header{
     background-color: #9c9c9c;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: max-content 1fr 1fr;
     color: white;
     font-size: 1.1rem;
     padding: 15px;
     border-radius: 10px 10px 0 0;
+}
+.delete-note-btn{
+    color: red;
+    padding-right: 20px;
+    cursor: pointer;
 }
 .note-date{
     text-align: right;
