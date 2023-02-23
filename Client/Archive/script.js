@@ -31,12 +31,9 @@ async function GetArchive(){
         document.title = 'Archive |' + responseData.Name;
         for(var i=responseData.ChildArchives.length-1; i>=0; i--){
             document.getElementById("children-archives").innerHTML += `<div class="archive" uuid="${responseData.ChildArchives[i].UUID}">${responseData.ChildArchives[i].Name}</div>`;
-            var ChildArchiveUUID = responseData.ChildArchives[i].UUID
-            document.getElementById("children-archives").lastElementChild.addEventListener('click', function(e){
-                e.stopImmediatePropagation();
-                window.location.href = `/archive/${ChildArchiveUUID}`;
-            });
+            var ChildArchiveUUID = responseData.ChildArchives[i].UUID;
         }
+        LinkArchives();
     }
 }
 async function NewArchive(){
@@ -50,21 +47,26 @@ async function NewArchive(){
         });
         if(response.status == 200){
             var responseData = await response.json();
-            DisplayArchive(name, responseData.UUID)
+            DisplayArchive(name, responseData.UUID);
+            LinkArchives();
         }
     }
 }
 function DisplayArchive(name, uuid){
-    document.getElementById("children-archives").innerHTML = `<div uuid="${uuid}">${name}</div>` + document.getElementById("children-archives").innerHTML;
-    document.getElementById("children-archives").lastElementChild.addEventListener('click', function(e){
-        e.stopImmediatePropagation();
-        window.location.href = `/archive/${uuid}`;
-    })
+    document.getElementById("children-archives").innerHTML = `<div class="archive" uuid="${uuid}">${name}</div>` + document.getElementById("children-archives").innerHTML;
 }
 function GetArchiveUUID(){
     return ((window.location.href).split('/').splice(-1)[0]);
 }
-
+function LinkArchives(){
+    var archives = document.getElementsByClassName("archive");
+    for(var i=0; i<archives.length; i++){
+        archives[i].addEventListener('click', function(e){
+            e.stopImmediatePropagation();
+            window.location.href = `/archive/${this.getAttribute('uuid')}`;
+        });
+    }
+}
 //Fetch notes
 async function GetNotes(){
     var response = await fetch('/getNotes', {
