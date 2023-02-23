@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const NoteSchema = new mongoose.Schema({
+    ParentArchiveUUID:{
+        type:String
+    },
     Text:{
         type: String
     },

@@ -57,3 +57,43 @@ h1{
     white-space: nowrap;
     cursor: pointer;
 }
+#notes-container{
+    width: 800px;
+    margin: 5vh auto;
+}
+#new-note-btn{
+    background-color: blue;
+    width: max-content;
+    color: white;
+    font-size: 2rem;
+    padding: 15px;
+    border-radius: 15px;
+    margin: 20px auto;
+    cursor: pointer;
+}
+.note{
+    border-radius: 15px;
+    border: black solid 5px;
+    margin: 20px 0;
+}
+.note-header{
+    background-color: #9c9c9c;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    color: white;
+    font-size: 1.1rem;
+    padding: 15px;
+    border-radius: 10px 10px 0 0;
+}
+.note-date{
+    text-align: right;
+}
+.textarea{
+    width: calc(100% - 36px);
+    min-height: 10vh;
+    font-size: 1.5rem;
+    padding: 15px;
+    border-radius: 0 0 10px 10px;
+    border: 0;
+    margin: 3px;
+}

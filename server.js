@@ -14,6 +14,7 @@ app.use(express.json());
 
 //Import MongoDB models
 const ArchiveModel = require('./models/archive.js');
+const note = require('./models/note.js');
 const NoteModel = require('./models/note.js')
 
 //Connect to MongoDB
@@ -71,6 +72,25 @@ app.post('/getArchive', async function(req, res){
         res.sendStatus(500);
     }
 });
+app.post('/getNotes', function(req, res){
+    try{
+        NoteModel.find({ParentArchiveUUID: req.body.ArchiveUUID}, function(err, notes){
+            if(err){
+                console.log(err);
+                res.sendStatus(500);
+            }else{
+                var notesData = [];
+                for(var i=0; i<notes.length; i++){
+                    notesData.push({id: notes[i]._id, DateCreated: (notes[i].DateCreated).getTime(), Text: notes[i].Text});
+                }
+                res.status(200).send(notesData);
+            }
+        });
+    }catch(e){
+        console.log(e);
+        res.sendStatus(500);
+    }
+})
 app.put('/newArchive', async function(req, res){
     try{
         var ParentArchive = req.body.ParentArchive;
@@ -84,6 +104,33 @@ app.put('/newArchive', async function(req, res){
         });
         await Archive.save();
         res.status(200).send({UUID: Archive.UUID});
+    }catch(e){
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+app.put('/newNote', async function(req, res){
+    try{
+        var Note = new NoteModel({
+            ParentArchiveUUID: req.body.ArchiveUUID,
+            Text: ""
+        });
+        await Note.save();
+        var DateCreated = Note.DateCreated.getDay();
+        res.status(200).send({id: Note._id, DateCreated: (Note.DateCreated).getTime()});
+    }catch(e){
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+app.put('/updateNotes', async function(req, res){
+    try{
+        for(var i=0; i<req.body.data.length; i++){
+            var Note = await NoteModel.findById(req.body.data[i].id);
+            Note.Text = req.body.data[i].text;
+            await Note.save();
+        }
+        res.sendStatus(200);
     }catch(e){
         console.log(e);
         res.sendStatus(500);

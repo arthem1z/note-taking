@@ -12,9 +12,6 @@ const ArchiveSchema = new mongoose.Schema({
     ParentArchive:{
         type: mongoose.Schema.Types.ObjectId
     },
-    Notes:[{
-        type: mongoose.Schema.Types.ObjectId
-    }],
     DateCreated:{
         type: Date,
         default: Date.now
