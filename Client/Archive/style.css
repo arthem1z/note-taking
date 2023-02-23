@@ -1,0 +1,59 @@
+#back-btn{
+    width: max-content;
+    font-size: 2rem;
+    padding: 15px;
+    border-radius: 5px;
+    border: black solid 2px;
+    margin: 20px 40px;
+    cursor: pointer;
+}
+h1{
+    text-align: center;
+    font-size: 4rem;
+    padding: 5vh;
+}
+#children-archives-container{
+    width: 600px;
+    margin: auto;
+}
+#new-archive-container{
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    align-items: center;
+    width: 600px;
+    margin: 20px auto;
+}
+#new-archive-input{
+    font-size: 1.5rem;
+    padding: 15px;
+    border-radius: 30px;
+    border: black solid 3px;
+    margin-right: 10px;
+}
+#new-archive-btn{
+    background-color: blue;
+    display: grid;
+    align-items: center;
+    color: white;
+    font-size: 1.5rem;
+    padding: 23px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+#children-archives{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    height: calc(1.5rem + 42px);
+    border-radius: 15px;
+    border: black solid 5px;
+    overflow-x: scroll;
+}
+#children-archives div{
+    font-size: 1.5rem;
+    padding: 15px;
+    margin: 0 2px;
+    border: black solid 1px;
+    white-space: nowrap;
+    cursor: pointer;
+}

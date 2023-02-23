@@ -1,0 +1,51 @@
+h1{
+    text-align: center;
+    font-size: 4rem;
+    padding: 8vh;
+}
+#new-archive-container{
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    align-items: center;
+    width: 600px;
+    margin: auto;
+}
+#new-archive-input{
+    font-size: 2rem;
+    padding: 15px;
+    border-radius: 30px;
+    border: black solid 3px;
+    margin: 0 10px;
+}
+#new-archive-btn{
+    background-color: blue;
+    display: grid;
+    align-items: center;
+    color: white;
+    font-size: 2rem;
+    padding: 23px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+#archives-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 70%;
+    margin: 30px auto;
+}
+.archive{
+    text-align: center;
+    padding: 15px;
+    border-radius: 15px;
+    border: black solid 5px;
+    margin: 10px;
+    cursor: pointer;
+}
+.archive h3{
+    font-size: 2.3rem;
+    padding: 20px;
+}
+.archive p{
+    color: #686868;
+    padding: 10px;
+}
