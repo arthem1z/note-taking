@@ -58,7 +58,7 @@ function DisplayArchive(name, uuid){
     document.getElementById("children-archives").innerHTML = `<div uuid="${uuid}">${name}</div>` + document.getElementById("children-archives").innerHTML;
     document.getElementById("children-archives").lastElementChild.addEventListener('click', function(e){
         e.stopImmediatePropagation();
-        window.location.href = `/archives/${uuid}`;
+        window.location.href = `/archive/${uuid}`;
     })
 }
 function GetArchiveUUID(){
