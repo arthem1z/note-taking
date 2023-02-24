@@ -18,6 +18,7 @@ const note = require('./models/note.js');
 const NoteModel = require('./models/note.js')
 
 //Connect to MongoDB
+mongoose.set("strictQuery", false);
 mongoose.connect('mongodb://127.0.0.1:27017/NoteTaking', {useNewUrlParser: true, useUnifiedTopology: true});
 var db = mongoose.connection;
 

@@ -4,6 +4,10 @@ window.onload = GetArchive();
 window.onload = GetNotes();
 window.onload = UpdateNotes();
 
+window.addEventListener('beforeunload', async function(e){
+    await UpdateNotes();
+    e.returnValue = '';
+});
 document.getElementById('new-archive-input').addEventListener('keypress', function(e){
     if(e.keyCode == 13) NewArchive();
 });
@@ -19,11 +23,13 @@ async function GetArchive(){
     if(response.status == 200){
         var responseData = await response.json();
         ArchiveUUID = responseData.UUID;
-        document.getElementById("back-btn").addEventListener('click', function(e){
+        document.getElementById("back-btn").addEventListener('click', async function(e){
             e.stopImmediatePropagation();
             if(responseData.ParentArchive){
+                await UpdateNotes();
                 window.location.href = `/archive/${responseData.ParentArchive}`;
             }else{
+                await UpdateNotes();
                 window.location.href = '/';
             }
         });
@@ -46,7 +52,6 @@ async function GetArchive(){
         document.title = 'Archive | ' + responseData.Name;
         for(var i=responseData.ChildArchives.length-1; i>=0; i--){
             document.getElementById("children-archives").innerHTML += `<div class="archive" uuid="${responseData.ChildArchives[i].UUID}">${responseData.ChildArchives[i].Name}</div>`;
-            var ChildArchiveUUID = responseData.ChildArchives[i].UUID;
         }
         LinkArchives();
     }
@@ -76,8 +81,9 @@ function GetArchiveUUID(){
 function LinkArchives(){
     var archives = document.getElementsByClassName("archive");
     for(var i=0; i<archives.length; i++){
-        archives[i].addEventListener('click', function(e){
+        archives[i].addEventListener('click', async function(e){
             e.stopImmediatePropagation();
+            await UpdateNotes();
             window.location.href = `/archive/${this.getAttribute('uuid')}`;
         });
     }
@@ -138,7 +144,7 @@ async function UpdateNotes(){
         body: JSON.stringify({data: notesData})
     });
     if(response.status == 200){
-        setTimeout(UpdateNotes, 2000);
+        setTimeout(UpdateNotes, 1000);
     }
 }
 async function DeleteNote(id){
